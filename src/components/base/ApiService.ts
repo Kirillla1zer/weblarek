@@ -1,4 +1,4 @@
-import { IApi, IOrder, IGet } from "../../../types";
+import { IApi, IBodyOrder, IGetProducts, ISendOrder } from "../../types";
 
 export class ApiService {
   api: IApi;
@@ -7,11 +7,11 @@ export class ApiService {
     this.api = api;
   }
 
-  get(): Promise<IGet> {
+  getProducts(): Promise<IGetProducts> {
     return this.api.get("/product/");
   }
 
-  post(body: IOrder) {
+  sendOrder(body: IBodyOrder): Promise<ISendOrder> {
     return this.api.post(`/order/`, body, "POST");
   }
 }

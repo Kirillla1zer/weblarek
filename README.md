@@ -129,13 +129,20 @@ interface IGet {
   items: IProduct[]
 }
 
-4) IOrder - описывает тело запроса на сервер.
+4) IBodyOrder - описывает тело запроса заказа на сервер.
 Нужен для отправки заказа на сервер(POST). Тело POST состоит из информации о покупателе,массив id товаров и их общая цена.
 Наследует интерфейс IBuyer.
 
-interface IOrder extends IBuyer {
+interface IBodyOrder extends IBuyer {
   total: number,
   items: string[]
+}
+
+5) IPost - описывает обьект ответа сервера на запрос POST. 
+
+interface IPost {
+  id: string,
+  total: number
 }
 
 ###### Модели данных
@@ -210,6 +217,7 @@ interface IOrder extends IBuyer {
 
 Методы класса:
 
-`get():Promise<IGet>` - запрос GET товаров у сервера.
-`post(body:IPost)` - запрос POST на сервер.принимает обьект IPost
+`getProducts(): Promise<IGetProducts>` - запрос GET товаров у сервера.
+`sendOrder(body:IBodyOrder): Promise<ISendOrder> ` - запрос POST на сервер.
+Принимает обьект типа IBodyOrder. Использует метод post экземпляра класса api.
 

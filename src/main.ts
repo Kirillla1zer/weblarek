@@ -1,9 +1,9 @@
 import './scss/styles.scss';
-import { Buyer } from './components/base/Models/Buyer';
-import { Catalog } from './components/base/Models/Catalog'; 
-import { ShoppingBasket } from './components/base/Models/ShoppingBasket'; 
+import { Buyer } from './components/base/Buyer';
+import { Catalog } from './components/base/Catalog'; 
+import { ShoppingBasket } from './components/base/ShoppingBasket'; 
 import { apiProducts } from './utils/data';
-import { ApiService } from './components/base/Models/ApiService';
+import { ApiService } from './components/base/ApiService';
 import { Api } from './components/base/Api';
 import { API_URL } from './utils/constants';
 //проверка класса Catalog
@@ -41,6 +41,7 @@ basket.clearAll()
 console.log('Возращаю список товаров после очистки корзины',basket.getProducts())
 
 //проверка класса Buyer
+console.log("------проверка класса Buyer---------")
 const user = new Buyer();
 console.log('Валидация',user.validateAddress())
 console.log('Валидация',user.validateEmail())
@@ -62,7 +63,7 @@ console.log('Информация о пользователе после очи�
 console.log("------проверка класса ApiService---------")
 const api = new Api(API_URL)
 const apiService = new ApiService(api)
-const data = await apiService.get()
+const data = await apiService.getProducts()
 console.log(`Данные с сервера приходят:`,data.items)
 //сохранение данные в каталог
 const catalog2 = new Catalog(data.items)

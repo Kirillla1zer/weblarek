@@ -24,12 +24,17 @@ export interface IBuyer {
   phone: string;
 }
 
-export interface IGet {
+export interface IGetProducts {
   total: number;
   items: IProduct[];
 }
 
-export interface IOrder extends IBuyer {
+export interface ISendOrder {
+  id: string,
+  total: number
+}
+
+export interface IBodyOrder extends IBuyer {
   total: number;
   items: string[];
 }

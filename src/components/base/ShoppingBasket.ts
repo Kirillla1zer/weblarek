@@ -1,4 +1,4 @@
-import { IProduct } from "../../../types";
+import { IProduct } from "../../types";
 
 export class ShoppingBasket {
 
@@ -31,19 +31,13 @@ export class ShoppingBasket {
       if(item.price != null)
       {
         acc += item.price
-        return acc
       }
       return acc
     },0)
   }
 
   checkProduct(productId: string): boolean{
-    if(this._products.find(item=> item.id === productId)){
-      return true
-    }
-    else{
-      return false
-    }
+    return this._products.some(item=> item.id === productId)
   }
 
   clearAll(){

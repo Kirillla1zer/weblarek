@@ -1,4 +1,4 @@
-import { IBuyer } from "../../../types";
+import { IBuyer } from "../../types";
 
 export class Buyer {
   private _payment: "card"|"cash"|"" = "";
@@ -40,31 +40,19 @@ export class Buyer {
   }
 
   validatePayment(): string{
-    if (this._payment == ""){
-      return "Нужно выбрать вид оплаты"
-    }
-    return ""
+    return this._payment == "" ? "Нужно выбрать вид оплаты" : ""
   }
 
   validateAddress(): string{
-    if (this._address == ""){
-      return "Нужно заполнить поле адрес"
-    }
-    return ""
+    return this._address == "" ? "Нужно заполнить поле адрес" : ""
   }
 
   validateEmail(): string{
-    if (this._email == ""){
-      return "Нужно заполнить поле email"
-    }
-    return ""
+    return this._email == "" ? "Нужно заполнить поле email" : ""
   }
 
   validatePhone(): string{
-    if (this._phone == ""){
-      return "Нужно заполнить поле phone"
-    }
-    return ""
+    return this._phone == "" ? "Нужно заполнить поле phone" : ""
   }
   
 }
