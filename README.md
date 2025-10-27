@@ -235,7 +235,7 @@ interface IPost {
 `counterElement: HTMLElement` - элемент разметки отвечающий за отрисовку количества товаров в корзине.
 
 Методы класса:
-`setCounter(value: number)` - метод смены количества товара на кнопке открывающую корзину.
+`set counter(value: number)` - сеттер смены количества товара на кнопке открывающей корзину.
 
 ####### Класс Gallery
 
@@ -247,7 +247,7 @@ interface IPost {
 `catalogElement: HTMLElement` - место в разметке для карточек.
 
 Методы класса:
-`setCatalog(items: HTMLElement[])` - метод смены списка товаров в каталоге. Принимает массив элементов разметки товаров.
+`set items(products: HTMLElement[])` - сеттер смены списка товаров в каталоге. Принимает массив элементов разметки товаров.
 
 ####### Класс Modal
 
@@ -260,7 +260,7 @@ interface IPost {
 `modalContent: HTMLElement` - поле для ссылки чтобы в дальнейшем сюда добавлять контент.
 
 Методы Класса:
-`setContent(content: HTMLElement)` - метод для установки контента в поле modalContent
+`set content(content: HTMLElement)` - cеттер для установки контента в поле modalContent
 
 ####### Класс OrderSuccess
 
@@ -269,10 +269,10 @@ interface IPost {
 `constructor(container: HTMLElement)` - конструктор принимает ссылку на DOM отвечающую за разметку успешного заказа. В разметке контейнера найдём элемент отвечающий за списанную итоговую цену.
 
 Поля класса:
-`writenOff: HTMLElement` - место в разметке отвечающее за списанную сумму в успешном заказе.
+`orderSuccessWrittenOFF: HTMLElement` - место в разметке отвечающее за списанную сумму в успешном заказе.
 
 Методы класса:
-`setWrittenOff(price: number)` - метод отвечающий за смену итоговой стоимости в успешном заказе.
+`set writtenOff(price: number)` - метод отвечающий за смену итоговой стоимости в успешном заказе.
 
 ####### Класс Card
 
@@ -289,8 +289,8 @@ interface IPost {
 `cardPrice: HTMLElement` - поле для хранения разметки ценника
 
 Методы класса:
-`setTitle(cardTitle: string)` - метод для установки новой разметки в поле cardTitle
-`setPrice(cardPrice: number)`- метод для установки новой разметки в поле cardPrice.
+`set title(cardTitle: string)` - метод для установки новой разметки в поле cardTitle
+`set price(cardPrice: number)`- метод для установки новой разметки в поле cardPrice.
 
 ####### Класс CardCatalog
 
@@ -304,8 +304,8 @@ interface IPost {
 `cardButton: HTMLElement` - поле для хранения самого контейнера.
 
 Методы класса:
-`setCategory(cardTitle: string)` - метод для установки нового заголовка категории.
-`setImage(src: string)`- метод для установки в разметке новой картинки у карточки каталога.
+`set category(category: string)` - метод для установки нового заголовка категории.
+`set image(src: string)`- метод для установки в разметке новой картинки у карточки каталога.
 
 ####### Класс CardFull
 
@@ -330,7 +330,7 @@ interface IPost {
 `constructor(container: HTMLElement)` - конструктор принимает ссылку на DOM разметку для карточки которая будет в корзине. 
 
 Поля класса:
-`indexCard: number` - каждая карта будет хранить свой номер в списке.
+`cardIndex: HTMLElement` - ссылка на разметку с цифрой в списке.
 `cardButtonDelete: HTMLButtonElement` - конпка удаления карточки из корзины
 
 Методы класса:

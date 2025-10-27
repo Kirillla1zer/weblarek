@@ -1,11 +1,19 @@
 import './scss/styles.scss';
-import { Buyer } from './components/base/Buyer';
-import { Catalog } from './components/base/Catalog'; 
-import { ShoppingBasket } from './components/base/ShoppingBasket'; 
+import { Buyer } from './components/Models/Buyer';
+import { Catalog } from './components/Models/Catalog'; 
+import { ShoppingBasket } from './components/Models/ShoppingBasket'; 
 import { apiProducts } from './utils/data';
 import { ApiService } from './components/base/ApiService';
 import { Api } from './components/base/Api';
 import { API_URL } from './utils/constants';
+
+import { Gallery } from './components/Views/Gallery';
+import { cloneTemplate, ensureElement } from './utils/utils';
+import { CardCatalog } from './components/Views/CardCatalog';
+import { EventEmitter } from './components/base/Events';
+import { Modal }  from './components/Views/Modal'
+import { CardFull } from './components/Views/CardFull';
+import { Header } from './components/Views/Header';
 //проверка класса Catalog
 console.log("------проверка класса Catalog---------")
 
@@ -76,3 +84,40 @@ console.log(`Получаем товар по id(несущ)`,catalog2.getProduc
 catalog2.getProductCard()
 catalog2.setProductCard(catalog2.getItems()[5])
 console.log(`Получаем выбранную карточку которую установили ранннее`,catalog2.getProductCard())
+
+console.log("------проверка КЛАССОВ ПРЕДСТАВЛЕНИЯ---------")
+console.log("------проверка класса Catalog + CardCatalog---------")
+
+console.log(`Данные с сервера приходят:`,data.items)
+const gallery = new Gallery(document.querySelector('.page')!);
+
+//Создаём брокер событий для снижения связанности модели и представления
+const events = new EventEmitter()
+const catalogModel = new Catalog(apiProducts.items)
+// events.on(событие,обработчик на это событие)
+// events.emit(событие которое должно сработать если где то брокер его установил,передаётся item(как раз чтобы знать что отрисовать))
+// Для каждой карточки создаём из класса представления(CardCatalog) инстанс 
+// и передаём обработчик который сработает если на карточку в каталоге нажали(нужно чтобы класс представления знал что отрисовать
+// а хранить данные он не может по SOLID и по MVC)
+events.on(`catalog:changed`,()=>{
+  const cardsInCatalog = catalogModel.getItems().map(item =>{
+  const cardOfCatalog = new CardCatalog(cloneTemplate('#card-catalog'),{
+    onclick: () => { events.emit(`card:select`, item)}
+  })
+  return  cardOfCatalog.render(item)
+})
+gallery.items = cardsInCatalog;
+gallery.render({items:cardsInCatalog})
+})
+//Проверяем проверку события catalog:changed сверху
+events.emit(`catalog:changed`)
+console.log("------проверка Modal класс представления,а так же нажатия на карточку в gallery и вывод CardFull---------")
+//Создание модального окна 
+const modal = new Modal(document.querySelector('.modal')!)
+//модальное окно открывается если установить что то в контент
+events.on('card:select',(item)=>{
+  modal.content = new CardFull(cloneTemplate('#card-preview'),events).render(item);
+})
+
+console.log("------проверка Header класс представления,а так же CardBasket---------")
+const header = new Header(document.querySelector('.header')!,events)
