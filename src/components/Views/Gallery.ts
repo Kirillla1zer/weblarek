@@ -1,8 +1,5 @@
+import { IGallery } from "../../types";
 import { Component } from "../base/Component"
-import { ensureElement } from "../../utils/utils"
-type IGallery = {
-  items:HTMLElement[]
-}
 
 export class Gallery extends Component<IGallery> {
 
@@ -11,12 +8,11 @@ export class Gallery extends Component<IGallery> {
 
   constructor(container: HTMLElement){
     super(container) 
-    this.catalogElement = ensureElement<HTMLElement>(`.gallery`,this.container);
+    this.catalogElement = this.container;
   }
   
   set items(products: HTMLElement[]) {
     this.catalogElement.replaceChildren(...products)
-    console.log('items сработал')
   }
   
 

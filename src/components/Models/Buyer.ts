@@ -1,4 +1,5 @@
 import { IBuyer } from "../../types";
+import { IEvents } from "../base/Events";
 
 export class Buyer {
   private _payment: "card"|"cash"|"" = "";
@@ -6,21 +7,28 @@ export class Buyer {
   private _email: string = "";
   private _phone: string = "";
   
+  constructor(protected eventBroker:IEvents){}
   
   setPayment(payment: "card"|"cash"|"") {
     this._payment = payment;
+    
+    this.eventBroker.emit('orderFormOneModel:changed')
   }
 
   setAddress(address:string){
     this._address = address;
+
+    this.eventBroker.emit('orderFormOneModel:changed')
   }
 
   setEmail(email:string){
     this._email = email;
+    this.eventBroker.emit('orderFormTwoModel:changed')
   }
-
+  
   setPhone(phone:string) {
     this._phone = phone;
+    this.eventBroker.emit('orderFormTwoModel:changed')
   }
 
   getAllInformation(): IBuyer {
@@ -37,6 +45,7 @@ export class Buyer {
     this.setAddress("");
     this.setEmail("");
     this.setPhone("")
+    
   }
 
   validatePayment(): string{

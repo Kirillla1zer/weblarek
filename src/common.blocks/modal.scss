@@ -15,9 +15,11 @@
 
   &_active {
     display: flex;
+    
   }
 
   &__container {
+
     @include mixins.container;
     @include mixins.flex(column);
     gap: $defaultPadding;

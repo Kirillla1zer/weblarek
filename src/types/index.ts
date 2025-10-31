@@ -38,3 +38,25 @@ export interface IBodyOrder extends IBuyer {
   total: number;
   items: string[];
 }
+
+// интерфейсы для классов представления
+
+export interface IHeader {
+  counter: number
+}
+
+export interface IGallery {
+  items:HTMLElement[]
+}
+
+export interface IModal {
+  content: HTMLElement
+}
+
+export interface IOrderSuccess {
+  writenOff: number;
+}
+
+export interface ICardActions {
+  onclick:()=> void;
+}

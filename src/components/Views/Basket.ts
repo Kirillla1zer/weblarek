@@ -1,22 +1,29 @@
 import { Component } from "../base/Component"
 import { ensureElement } from "../../utils/utils"
+import { IEvents } from "../base/Events";
 
 type IBasket = {
   finalPrice: number;
   items: HTMLElement[];
-}
+} & {buttonToggle:boolean}
 
-export class OrderSucces extends Component<IBasket> {
+export class Basket extends Component<IBasket> {
 
   basketButtonMakeOrder: HTMLButtonElement;
   basketList: HTMLElement;
   basketFinalPrice: HTMLElement;
-  
-  constructor(container: HTMLElement){
+  eventBroker: IEvents
+  constructor(container: HTMLElement,eventBroker:IEvents){
     super(container) 
-    this.basketButtonMakeOrder = ensureElement<HTMLButtonElement>('order-success__description',container)
-    this.basketList = ensureElement<HTMLElement>('order-success__description',container)
-    this.basketFinalPrice = ensureElement<HTMLElement>('basketFinalPrice',container)
+
+    this.basketButtonMakeOrder = ensureElement<HTMLButtonElement>('.basket__button',this.container)
+    this.basketList = ensureElement<HTMLUListElement>('.basket__list',this.container)
+    this.basketFinalPrice = ensureElement<HTMLElement>('.basket__price',this.container)
+    this.eventBroker = eventBroker;
+
+    this.basketButtonMakeOrder.addEventListener('click',()=>{
+      this.eventBroker.emit('basketMakeOrder:click');
+    })
   }
   
   set finalPrice(price: number) {
@@ -27,5 +34,7 @@ export class OrderSucces extends Component<IBasket> {
     this.basketList.replaceChildren(...products)
   }
   
-
+  set buttonToggle(value: boolean){
+    value == true ? this.basketButtonMakeOrder.disabled = false : this.basketButtonMakeOrder.disabled = true
+  }
 }

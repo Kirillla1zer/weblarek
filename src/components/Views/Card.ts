@@ -16,8 +16,8 @@ export abstract class Card<T> extends Component<T>{
     this.cardTitle.textContent = title;
   }
 
-  set price(price: number) {
-    this.cardPrice.textContent = `${price} синапсов`;
+  set price(price: number | null) {
+    price != null ? this.cardPrice.textContent = `${price} синапсов` : this.cardPrice.textContent = `Бесценно`
   }
 
 }

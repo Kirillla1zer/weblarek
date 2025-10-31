@@ -1,15 +1,20 @@
 import { IProduct } from "../../types";
+import { IEvents } from "../base/Events";
 
 export class Catalog {
   private _products: IProduct[] = [];
   private _productCard: IProduct | undefined;
+  protected _eventBroker: IEvents;
 
-  constructor(products: IProduct[]) {
+  constructor(products: IProduct[],eventBroker:IEvents) {
+    this._eventBroker = eventBroker;
     this.setItems(products);
+    
   }
 
   setItems(products: IProduct[]) {
     this._products = products;
+    this._eventBroker.emit('сatalog:changed')
   }
 
   getItems(): IProduct[] {
@@ -19,6 +24,7 @@ export class Catalog {
   setProductCard(productCard: IProduct) {
     if (productCard != undefined) {
       this._productCard = productCard;
+      this._eventBroker.emit('card:setProductCard',this._productCard)
     }
   }
 
