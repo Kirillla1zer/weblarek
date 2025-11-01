@@ -1,16 +1,16 @@
+import { eventList } from "../../main";
 import { ensureElement } from "../../utils/utils"
 import { IEvents } from "../base/Events";
 import { Form } from "./Form";
 
 type IOrderFormOne = {
   errors: string[]
-  buttonActive: "card" | "cash" | ""
+  buttonPaymentActive: "card" | "cash" | ""
 } 
 
 export class OrderFormOne extends Form<IOrderFormOne> {
 
   orderInputAddress: HTMLInputElement;
-  orderButtonNext: HTMLButtonElement;
   orderCashButton: HTMLButtonElement;
   orderCardButton: HTMLButtonElement;
   eventBroker: IEvents;
@@ -18,29 +18,29 @@ export class OrderFormOne extends Form<IOrderFormOne> {
   constructor(container: HTMLElement, eventBroker:IEvents){
     super(container) 
     this.orderInputAddress = ensureElement<HTMLInputElement>('[name="address"]',this.container);
-    this.orderButtonNext = ensureElement<HTMLButtonElement>('.order__button',this.container);
     this.orderCashButton = ensureElement<HTMLButtonElement>('[name="cash"]',this.container);
     this.orderCardButton = ensureElement<HTMLButtonElement>('[name="card"]',this.container);
     this.eventBroker = eventBroker;
     
     this.orderCardButton.addEventListener('click',()=>{
-      this.eventBroker.emit('payment:new',{payment:'card'})
+      this.eventBroker.emit(eventList.PayementNew,{payment:'card'})
     })
 
     this.orderCashButton.addEventListener('click',()=>{
-      this.eventBroker.emit('payment:new',{payment:'cash'})
+      this.eventBroker.emit(eventList.PayementNew,{payment:'cash'})
     })
 
     this.orderInputAddress.addEventListener('input',()=>{
-      eventBroker.emit('address:new',{textField:this.orderInputAddress.value})
-    })
-
-    this.orderButtonNext.addEventListener('click',()=>{
-      this.eventBroker.emit('orderFormOne:next')
-    })
+      eventBroker.emit(eventList.AddressNew,{textField:this.orderInputAddress.value})
+    })  
+    
   }
-  
-  set buttonActive(value:"card" | "cash" | ""){
+
+  submit(): void {
+    this.eventBroker.emit(eventList.OrderFormOneNext)
+  }
+
+  set buttonPaymentActive(value:"card" | "cash" | ""){
 
     //очищаем прошлый результат
     this.orderCardButton.classList.remove('button_alt-active')

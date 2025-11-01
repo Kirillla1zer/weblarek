@@ -14,8 +14,8 @@ export class CardCatalog extends Card<ICardCatalog> {
   cardButton: HTMLElement;
 
   constructor(container: HTMLElement, actions?: ICardActions) {
+    
     super(container);
-
     this.cardButton = container;
     this.cardImage = ensureElement<HTMLImageElement>(`.card__image`,this.container);
     this.cardCategory = ensureElement<HTMLElement>(`.card__category`,this.container)
@@ -31,7 +31,7 @@ export class CardCatalog extends Card<ICardCatalog> {
   }
 
   set image(src: string) {
-    this.cardImage.src = `${CDN_URL}/${src}`;
+    this.setImage(this.cardImage,`${CDN_URL}/${src}`)
   }
   
 }

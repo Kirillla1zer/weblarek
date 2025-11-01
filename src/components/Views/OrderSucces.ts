@@ -2,6 +2,7 @@ import { Component } from "../base/Component"
 import { ensureElement } from "../../utils/utils"
 import { IEvents } from "../base/Events";
 import { IOrderSuccess } from "../../types";
+import { eventList } from "../../main";
 
 export class OrderSuccess extends Component<IOrderSuccess> {
 
@@ -16,7 +17,7 @@ export class OrderSuccess extends Component<IOrderSuccess> {
     this.eventBroker = eventBroker;
     
     this.orderSuccessButton.addEventListener('click',()=>{
-      eventBroker.emit('orderSuccesButton:click')
+      eventBroker.emit(eventList.OrderSuccesButtonClick)
     })
   }
   

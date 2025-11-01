@@ -1,3 +1,4 @@
+import { eventList } from "../../main";
 import { IProduct } from "../../types";
 import { IEvents } from "../base/Events";
 
@@ -12,7 +13,7 @@ export class ShoppingBasket {
   addProduct(product:IProduct){
     if(product.price){
       this._products.push(product)
-      this.eventBroker.emit('basket:changed',{product})
+      this.eventBroker.emit(eventList.BasketChanged,{product})
       
     }
     else {
@@ -22,7 +23,7 @@ export class ShoppingBasket {
 
   deleteProduct(product: IProduct){
     this._products = this._products.filter(item => item.id != product.id)
-    this.eventBroker.emit('basket:changed',{product})
+    this.eventBroker.emit(eventList.BasketChanged,{product})
     
   }
 
@@ -51,6 +52,6 @@ export class ShoppingBasket {
 
   clearAll(){
     this._products = [];
-    this.eventBroker.emit('basket:changed')
+    this.eventBroker.emit(eventList.BasketChanged)
   }
 }

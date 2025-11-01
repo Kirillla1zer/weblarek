@@ -1,4 +1,5 @@
 
+import { eventList } from "../../main";
 import { ensureElement } from "../../utils/utils"
 import { IEvents } from "../base/Events";
 import { Form } from "./Form";
@@ -11,29 +12,24 @@ export class OrderFormTwo extends Form<IOrderFormTwo> {
 
   orderInputEmail:HTMLInputElement
   orderInputPhone:HTMLInputElement
-  orderButtonMakeOrder: HTMLButtonElement
   eventBroker:IEvents;
 
   constructor(container: HTMLElement,eventBroker:IEvents){
     super(container) 
     this.orderInputEmail = ensureElement<HTMLInputElement>('[name="email"]',this.container);
-    this.orderButtonMakeOrder = ensureElement<HTMLButtonElement>('.modal__actions .button',this.container);
     this.orderInputPhone = ensureElement<HTMLInputElement>('[name="phone"]',this.container);
     this.eventBroker = eventBroker;
 
     this.orderInputEmail.addEventListener('input',()=>{
-      this.eventBroker.emit('email:new',{textField:this.orderInputEmail.value})
+      this.eventBroker.emit(eventList.EmailNew,{textField:this.orderInputEmail.value})
     })
 
     this.orderInputPhone.addEventListener('input',()=>{
-      eventBroker.emit('phone:new',{textField:this.orderInputPhone.value})
+      eventBroker.emit(eventList.PhoneNew,{textField:this.orderInputPhone.value})
     })
-
-    this.orderButtonMakeOrder.addEventListener('click',(event)=>{
-      event.preventDefault()
-      this.eventBroker.emit('orderFormTwo:makeOrder')
-    })
-
   }
-  
+
+  submit(): void {
+    this.eventBroker.emit(eventList.OrderFormTwoMakeOrder)
+  }
 }

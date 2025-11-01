@@ -1,6 +1,7 @@
 import { Component } from "../base/Component"
 import { ensureElement } from "../../utils/utils"
 import { IEvents } from "../base/Events";
+import { eventList } from "../../main";
 
 type IBasket = {
   finalPrice: number;
@@ -22,7 +23,7 @@ export class Basket extends Component<IBasket> {
     this.eventBroker = eventBroker;
 
     this.basketButtonMakeOrder.addEventListener('click',()=>{
-      this.eventBroker.emit('basketMakeOrder:click');
+      this.eventBroker.emit(eventList.BasketMakeOrderClick);
     })
   }
   

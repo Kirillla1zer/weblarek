@@ -34,7 +34,7 @@ export class CardFull extends Card<ICardFull> {
   }
 
   set image(src: string) {
-    this.cardImage.src = `${CDN_URL}/${src}`;
+    this.setImage(this.cardImage,`${CDN_URL}/${src}`)
   }
 
   set description(text: string){

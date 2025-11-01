@@ -2,6 +2,7 @@ import { Component } from "../base/Component"
 import { ensureElement } from "../../utils/utils"
 import { IEvents } from "../base/Events";
 import { IHeader } from "../../types";
+import { eventList } from "../../main";
 
 export class Header extends Component<IHeader> {
 
@@ -16,7 +17,7 @@ export class Header extends Component<IHeader> {
     this.eventBroker = eventBroker;
 
     this.basketButton.addEventListener('click',()=>{
-        eventBroker.emit('headerBasket:click'); 
+        eventBroker.emit(eventList.HeaderBasketClick); 
       }
     )
   }

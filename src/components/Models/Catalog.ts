@@ -1,5 +1,6 @@
 import { IProduct } from "../../types";
 import { IEvents } from "../base/Events";
+import { eventList } from "../../main";
 
 export class Catalog {
   private _products: IProduct[] = [];
@@ -14,7 +15,7 @@ export class Catalog {
 
   setItems(products: IProduct[]) {
     this._products = products;
-    this._eventBroker.emit('сatalog:changed')
+    this._eventBroker.emit(eventList.CatalogChanged)
   }
 
   getItems(): IProduct[] {
@@ -24,7 +25,7 @@ export class Catalog {
   setProductCard(productCard: IProduct) {
     if (productCard != undefined) {
       this._productCard = productCard;
-      this._eventBroker.emit('card:setProductCard',this._productCard)
+      this._eventBroker.emit(eventList.CardSetProductCard,this._productCard)
     }
   }
 

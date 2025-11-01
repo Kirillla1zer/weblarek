@@ -2,6 +2,7 @@ import { Component } from "../base/Component"
 import { ensureElement } from "../../utils/utils"
 import { IEvents } from "../base/Events";
 import { IModal } from "../../types";
+import { eventList } from "../../main";
 
 export class Modal extends Component<IModal> {
 
@@ -15,15 +16,14 @@ export class Modal extends Component<IModal> {
     this.modalButtonClose = ensureElement<HTMLButtonElement>('.modal__close',this.container)
     this.modalContent = ensureElement<HTMLElement>('.modal__content',this.container)
     this.modalContainer = ensureElement<HTMLElement>('.modal__container',this.container)
-
     this.eventBroker = eventBroker;
 
     this.modalButtonClose.addEventListener('click',()=>{
-      this.CloseModal()
+      this.closeModal()
     })
 
     this.container.addEventListener('click',()=>{
-      this.CloseModal()
+      this.closeModal()
     })
 
     this.modalContainer.addEventListener('click',(e)=>{
@@ -33,17 +33,30 @@ export class Modal extends Component<IModal> {
   
   set content(content: HTMLElement) {
     this.modalContent.replaceChildren(content);
-    this.OpenModal()
+    this.openModal()
   }
   
-  OpenModal():void {
+  openModal():void {
     this.container.classList.add('modal_active')
-    this.eventBroker.emit('modal:open')
+    this.eventBroker.emit(eventList.ModalOpen)
+
+    document.addEventListener("keydown", (event)=>{
+      if (event.key == "Escape"){
+        this.closeModal()
+      }
+    });
   }
 
-  CloseModal():void{
+  closeModal():void{
     this.container.classList.remove('modal_active')
-    this.eventBroker.emit('modal:close')
+    this.eventBroker.emit(eventList.ModalClose)
+
+    document.removeEventListener("keydown", (event)=>{
+      if (event.key == "Escape"){
+        this.closeModal()
+      }
+    })
+     
   }
 
 }
