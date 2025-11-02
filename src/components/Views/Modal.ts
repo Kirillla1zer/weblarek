@@ -10,7 +10,12 @@ export class Modal extends Component<IModal> {
   modalContent: HTMLElement;
   eventBroker: IEvents;
   modalContainer: HTMLElement; 
-
+  _handleEscape = (evt: KeyboardEvent) => {
+    if (evt.key === "Escape") {
+      this.closeModal();
+    }
+  };
+  
   constructor(container: HTMLElement,eventBroker:IEvents ){
     super(container) 
     this.modalButtonClose = ensureElement<HTMLButtonElement>('.modal__close',this.container)
@@ -40,22 +45,14 @@ export class Modal extends Component<IModal> {
     this.container.classList.add('modal_active')
     this.eventBroker.emit(eventList.ModalOpen)
 
-    document.addEventListener("keydown", (event)=>{
-      if (event.key == "Escape"){
-        this.closeModal()
-      }
-    });
+    document.addEventListener("keydown", this._handleEscape);
   }
 
   closeModal():void{
     this.container.classList.remove('modal_active')
     this.eventBroker.emit(eventList.ModalClose)
 
-    document.removeEventListener("keydown", (event)=>{
-      if (event.key == "Escape"){
-        this.closeModal()
-      }
-    })
+    document.removeEventListener("keydown", this._handleEscape);
      
   }
 

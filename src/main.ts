@@ -84,7 +84,6 @@ apiService.getProducts()
 
 //слушатель события на клик по карточке в галерее,идёт установка этой карточки в моделях данных каталога в поле _productCard
 eventBroker.on(eventList.CardProductSelect,(item: IProduct)=>{
-  console.log(item)
   catalogModel.setProductCard(item)
 })
 
